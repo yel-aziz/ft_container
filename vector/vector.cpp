@@ -6,14 +6,9 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:24 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/01/31 15:22:20 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:35:59 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 
-Vector::Vector()
-{
-    this->array = new T[1];
-    this->array[0] = 5;
-}
