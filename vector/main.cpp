@@ -6,12 +6,13 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:12:47 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/02 16:27:56 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:28:52 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "vector.hpp"
+#include <vector>
 
 
 int main()

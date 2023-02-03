@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/02 22:48:27 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:27:53 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@ namespace ft
 class vector
 {
     public:
-        typedef Allocator                                allocator_type;
-        typedef size_t                                     size_type;
+        typedef Allocator                                   allocator_type;
+        typedef size_t                                      size_type;
         typedef T                                           value_type;
         typedef ft::random_acces_iterators<value_type>      iterator;
         typedef ft::random_acces_iterators<value_type>      const_iterator;
         typedef ft::reverse_iterators<iterator>             reverse_iterator;
         typedef ft::reverse_iterators<const_iterator>       const_reverse_iterator;
-        value_type *array;
+        value_type      *array;
     private:
-        allocator_type myallocator;
-        size_type  capacity;
-        size_type  size_;
+        allocator_type  myallocator;
+        size_type       capacity;
+        size_type       size_;
         /////////////////////////////////////////// realocation methode ////////////////////////////////////////////////////////
         value_type *realocation(value_type *oldarray, size_type numbertoalocate)
         {
-            value_type *tmp;
+            value_type  *tmp;
             int         i;
 
             tmp = myallocator.allocate(numbertoalocate);
@@ -69,7 +69,7 @@ class vector
         {
             return this->array[index];
         }
-    //////////////////////////////////////// insertion methodes ///////////////////////////////////////////////////////////////
+    //////////////////////////////////////// insertion methodes ////////////////////////////////////////////////////////////
         void push_back (const value_type& val)
         {
             if (capacity == 0) { array = myallocator.allocate(1); capacity = 1;}
