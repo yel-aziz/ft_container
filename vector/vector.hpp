@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/05 21:57:38 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:38:30 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ class vector
         typedef T                                           value_type;
         typedef ft::random_access_iterator<value_type>      iterator;
         typedef ft::random_access_iterator<value_type>      const_iterator;
+        typedef ptrdiff_t                                   difference_type;
+
         // typedef ft::reverse_iterators<iterator>             reverse_iterator;
         // typedef ft::reverse_iterators<const_iterator>       const_reverse_iterator;
         value_type      *array;
@@ -48,6 +50,9 @@ class vector
             return (tmp);
         }
     public:
+    difference_type diff(iterator it1, iterator it2){
+        return it1 - it2;
+    }
     ///////////////////////////////////////////// constructors /////////////////////////////////////////////////////////////
         vector (const allocator_type& alloc = allocator_type()): myallocator(alloc), capacity_(0), size_(0){}
         vector (const vector& x){ this->array = x.array; this->capacity_ = x.capacity_; this->size_ = x.size_;}
@@ -84,18 +89,9 @@ class vector
             size_--;
         }
 
-        iterator insert( const_iterator pos, const T& value )
-        {
-            // if( pos < 0) {return ;}
-            if(pos >= this->end()) { this->array = realocation(this->array,(capacity_ * 2));
-                *(this->array + pos ) =  value;
-                }
-            // else if(pos < this->end())
-            // {
-            //     *(this->array + pos ) =  value;
-            // }
-            return end() - pos;
-        }
+        // iterator insert(const_iterator pos, const T& value )
+        // {
+        // }
         
         void assign (size_type n, const value_type& val)
         {
