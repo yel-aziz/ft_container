@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:12:47 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/03 18:28:52 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:58:33 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,21 @@
 #include <vector>
 
 
+#include <iostream>
+
 int main()
 {
-    ft::vector<int> a(5000000,51000000);
-    ft::vector<int> b(a);
-    // a.push_back(55);
-    // a.push_back(7);
-    // a.push_back(8);
-    // a.push_back(81);
-    // a.push_back(88);
-    // a.assign(10,'g');
-    // a.assign(10,5);
+   // std::vector<int> a;
 
-    std::cout << "value of a == " << a.array[0] << std::endl;
-    std::cout << "value of b == " << b.array[0] << std::endl;
-    std::cout << "value of a == " << a.array[1] << std::endl;
-    std::cout << "value of a == " << a.array[2] << std::endl;
-    std::cout << "value of a == " << a.array[3] << std::endl;
+   // a.push_back(9);
+   // a.insert(a.begin(),22);
+   // a.insert(a.begin(),22);
+   // std::cout << a[0] << " size == " << a.size() << " capacity "  << a.capacity();
+   // /////
+   ft::vector<int> b;
 
-    // std::cout << "value of a == " << a.array[3] << std::endl;
-    // std::cout << a.array[1] << std::endl;
+   b.push_back(9);
+   
+   // b.insert(b.begin(),22);
+   std::cout << b[0] << " size == " << b.size() << " cbpbcity "  << *b.insert(b.begin(),22) ;
 }
