@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/06 00:32:22 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:13:49 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ namespace ft
         // typedef ft::reverse_iterators<const_iterator>       const_reverse_iterator;
         value_type *array;
 
+        size_type size_;
     private:
         allocator_type myallocator;
         size_type capacity_;
-        size_type size_;
         /////////////////////////////////////////// realocation methode ////////////////////////////////////////////////////////
         value_type *realocation(value_type *oldarray, size_type numbertoalocate)
         {
@@ -88,12 +88,12 @@ namespace ft
         {
             if (capacity_ == 0)
             {
-                array = myallocator.allocate(1);
+                this->array = myallocator.allocate(1);
                 capacity_ = 1;
             }
             else if (capacity_ == size_)
             {
-                array = realocation(array, (capacity_ * 2));
+                this->array = realocation(array, (capacity_ * 2));
             }
             array[size_] = val;
             size_++;
@@ -105,25 +105,10 @@ namespace ft
             size_--;
         }
 
-        iterator insert(const_iterator pos, const T &value)
-        {
-            if ((1 + size_) > this->capacity_)
-            {
-                int i = -1;
-                value_type *new_tab = myallocator.allocate((1 + size_));
-                while (++i <= capacity_)
-                {
-                    if (i == diff(end(),pos) - 1){ new_tab[i] = value; i++;}
-                    new_tab[i] = this->array[i];
-                }
-                // myallocator.deallocat(this->array,capacity_);
-                this->array = new_tab;
-                // std::cout << new_tab[0];
-                // std::cout << new_tab[1];
-                // std::cout << new_tab[2];
-            }
-            return end();
-        }
+        // iterator insert(const_iterator pos, const T &value)
+        // {
+            
+        // }
 
         void assign(size_type n, const value_type &val)
         {
@@ -138,10 +123,10 @@ namespace ft
             capacity_ = n;
         }
         /////////////////////////////////////////////// iterators //////////////////////////////////////////////////////////////
-        iterator begin() { return (iterator(array)); }
-        const_iterator begin() const { return (iterator(array)); }
-        const_iterator end() const { return (iterator(array + size_)); }
-        iterator end() { return (iterator(array + size_)); }
+        iterator begin() { return (iterator(array));}
+        const_iterator begin() const { return (iterator(array));}
+        const_iterator end() const { return (iterator(this->array + size_));}
+        iterator end() { return (iterator(this->array + size_));}
         // reverse_iterator rbegin(){return(this->array[size_]);}
         // const_reverse_iterator rbegin() const {return(this->array[size_]);}
         // reverse_iterator rend(){return(this->array[0]);}
