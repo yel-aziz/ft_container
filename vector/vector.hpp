@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/06 18:13:49 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/08 00:35:22 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ namespace ft
         value_type *array;
 
         size_type size_;
+        size_type capacity_;
     private:
         allocator_type myallocator;
-        size_type capacity_;
         /////////////////////////////////////////// realocation methode ////////////////////////////////////////////////////////
         value_type *realocation(value_type *oldarray, size_type numbertoalocate)
         {
@@ -105,10 +105,66 @@ namespace ft
             size_--;
         }
 
-        // iterator insert(const_iterator pos, const T &value)
-        // {
-            
-        // }
+        iterator insert(const_iterator pos, const T &value)
+        {
+           difference_type position = pos - begin();
+            // if(position > capacity_)
+            //     return begin();
+           if(position == size_)
+           {
+                push_back(value);
+           }
+           else if (position <= size_ && size_ + 1 <= capacity_)
+           {
+                value_type *new_tab = myallocator.allocate(capacity_);
+                int j = 0;
+                for(int i = 0; i <= size_ ; i++)
+                {
+                    if(i == position){new_tab[i] = value; i++;}
+                    new_tab[i] = array[j++]; 
+                }
+                //destroy array
+                this->array = new_tab;
+                size_++;
+           }
+   
+            return end();
+        }
+
+        void insert (iterator pos, size_type n, const value_type& value)
+        {
+            difference_type posi = pos - this->begin();
+            value_type *new_one = myallocator.allocate(((capacity_ + n) * 2));
+           if (posi < this->size_)
+           {
+                int i = 0;
+                int j = 0;
+                int k = 0;
+                while(i <= size_ + n)
+                {
+                    if(i == posi)
+                    {
+                        printf("i === %d\n",i);
+                        k = i;
+                        printf("k === %d\n",k);
+                        printf("n === %d\n",n);
+                        while (k <= n)
+                        {
+                            new_one[k] = value;
+                            k++;
+                            // i++;
+                        }
+                        i = k;
+                        // i--;
+                }
+                    new_one[i] = this->array[j];
+                    i++;
+                    j++;
+                }
+                this->array = new_one;
+                this->size_ = (i - 1);
+           }
+        }
 
         void assign(size_type n, const value_type &val)
         {
@@ -145,7 +201,7 @@ namespace ft
 
         // }
 
-        // value_type operator[](size_type n){ return this->array[n];}
+        value_type operator[](size_type n){ return this->array[n];}
     };
 
 }
