@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/08 00:35:22 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:30:51 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ namespace ft
     class vector
     {
     public:
-        typedef Allocator allocator_type;
-        typedef size_t size_type;
-        typedef T value_type;
+        typedef Allocator                              allocator_type;
+        typedef size_t                                 size_type;
+        typedef T                                      value_type;
         typedef ft::random_access_iterator<value_type> iterator;
         typedef ft::random_access_iterator<value_type> const_iterator;
-        typedef ptrdiff_t difference_type;
+        typedef ptrdiff_t                              difference_type;
 
         // typedef ft::reverse_iterators<iterator>             reverse_iterator;
         // typedef ft::reverse_iterators<const_iterator>       const_reverse_iterator;
@@ -105,17 +105,19 @@ namespace ft
             size_--;
         }
 
-        iterator insert(const_iterator pos, const T &value)
+        iterator insert(iterator pos, const T &value)
         {
-           difference_type position = pos - begin();
-            // if(position > capacity_)
-            //     return begin();
+            difference_type position = pos - begin();
+            if(position > capacity_)
+                return begin();
            if(position == size_)
            {
                 push_back(value);
            }
+    
            else if (position <= size_ && size_ + 1 <= capacity_)
            {
+                printf("i'm hereeee\n");
                 value_type *new_tab = myallocator.allocate(capacity_);
                 int j = 0;
                 for(int i = 0; i <= size_ ; i++)
@@ -125,17 +127,18 @@ namespace ft
                 }
                 //destroy array
                 this->array = new_tab;
-                size_++;
+                this->capacity_ = capacity_ ;
+                this->size_++;
            }
    
-            return end();
+            return this->begin() + position;
         }
 
         void insert (iterator pos, size_type n, const value_type& value)
         {
             difference_type posi = pos - this->begin();
             value_type *new_one = myallocator.allocate(((capacity_ + n) * 2));
-           if (posi < this->size_)
+           if (posi <= this->size_ || posi >= this->size_)
            {
                 int i = 0;
                 int j = 0;
@@ -144,28 +147,53 @@ namespace ft
                 {
                     if(i == posi)
                     {
-                        printf("i === %d\n",i);
                         k = i;
-                        printf("k === %d\n",k);
-                        printf("n === %d\n",n);
-                        while (k <= n)
+                        while (k < n + i)
                         {
-                            new_one[k] = value;
-                            k++;
-                            // i++;
+                            new_one[k++] = value;
                         }
                         i = k;
-                        // i--;
                 }
-                    new_one[i] = this->array[j];
-                    i++;
-                    j++;
+                    new_one[i++] = this->array[j++];
                 }
                 this->array = new_one;
                 this->size_ = (i - 1);
+                this->capacity_ = ((capacity_ + n) * 2);
            }
         }
-
+    
+        template <class InputIterator>    void insert (iterator position, InputIterator first, InputIterator last)
+        {
+            
+            difference_type calcule = last - first;
+            if(calcule == 0){return;}
+            if( this->size_ == 0 && calcule > 0){
+                while (first < last)
+                {
+                    push_back(*first);
+                    first++;
+                }
+            }
+                difference_type posi = position - begin();
+                int j = 0;
+                value_type *array_new = myallocator.allocate((this->capacity_ + calcule) * 2);
+                for(int i = 0; i < this->size_; i++){
+                    array_new[i] = this->array[j++];
+                    if(i == posi){
+                        while (first < last)
+                        {
+                            array_new[i] = *first;
+                            first++; i++;
+                            this->size_++;
+                        }
+                        i--;
+                        j--;
+                    }
+                }
+                this->capacity_ *= 2;
+                this->array = array_new;
+            
+        }
         void assign(size_type n, const value_type &val)
         {
             int i = -1;
