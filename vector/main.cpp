@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:12:47 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/10 20:30:00 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/11 20:48:12 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ int main()
   ft::vector<int>::iterator it;
   ft::vector<int> b;
 
-  // a.push_back(4);
-
-
-
-
-b.push_back(11);
-
-
+  a.push_back(-4944565);
+  a.push_back(4);
   
+  b.push_back(11);
+  b.push_back(19);
+  b.push_back(18);
+  b.push_back(133);
   std::cout << "capacity b ===== " << b.capacity() << std::endl;
   std::cout << "size b ==== " << b.size() << std::endl;
-  
-  //  for(int i = 0; i < a.size(); i++){
-  //  std::cout << a[i] << std::endl;
-  //  }
-  b.insert(b.begin(),a.begin(),a.end());
+  it = b.end();
+
+  b.erase(it);
+
+    
+  // b.assign(a.begin(),a.end());
+  // b.insert(b.begin(),a.begin(),a.end());
   // a.insert(it,10);
   
   std::cout << "capacity " << b.capacity() << std::endl;

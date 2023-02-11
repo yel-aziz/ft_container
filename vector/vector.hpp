@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/10 20:30:51 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/11 20:52:35 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ namespace ft
         size_type size_;
         size_type capacity_;
     private:
-        allocator_type myallocator;
+        allocator_type ft_allocater;
         /////////////////////////////////////////// realocation methode ////////////////////////////////////////////////////////
         value_type *realocation(value_type *oldarray, size_type numbertoalocate)
         {
             value_type *tmp;
             int i;
 
-            tmp = myallocator.allocate(numbertoalocate);
+            tmp = ft_allocater.allocate(numbertoalocate);
             i = -1;
             while (++i <= capacity_)
                 tmp[i] = oldarray[i];
@@ -57,20 +57,20 @@ namespace ft
             return it1 - it2;
         }
         ///////////////////////////////////////////// constructors /////////////////////////////////////////////////////////////
-        vector(const allocator_type &alloc = allocator_type()) : myallocator(alloc), capacity_(0), size_(0) {}
+        vector(const allocator_type &alloc = allocator_type()) : ft_allocater(alloc), capacity_(0), size_(0) {}
         vector(const vector &x)
         {
             this->array = x.array;
             this->capacity_ = x.capacity_;
             this->size_ = x.size_;
         }
-        vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : myallocator(alloc)
+        vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : ft_allocater(alloc)
         {
-            this->array = myallocator.allocate(n);
+            this->array = ft_allocater.allocate(n);
             for (int i = 0; i <= (n - 1); i++)
                 this->array[i] = val;
         }
-        ~vector() { myallocator.destroy(this->array); }
+        ~vector() { ft_allocater.destroy(this->array); }
         ////////////////////////////////////////// operators overloding ////////////////////////////////////////////////////////
         vector &operator=(const vector &obj)
         {
@@ -88,7 +88,7 @@ namespace ft
         {
             if (capacity_ == 0)
             {
-                this->array = myallocator.allocate(1);
+                this->array = ft_allocater.allocate(1);
                 capacity_ = 1;
             }
             else if (capacity_ == size_)
@@ -101,7 +101,7 @@ namespace ft
 
         void pop_back()
         {
-            myallocator.destroy((array + (size_ - 1)));
+            ft_allocater.destroy((array + (size_ - 1)));
             size_--;
         }
 
@@ -118,7 +118,7 @@ namespace ft
            else if (position <= size_ && size_ + 1 <= capacity_)
            {
                 printf("i'm hereeee\n");
-                value_type *new_tab = myallocator.allocate(capacity_);
+                value_type *new_tab = ft_allocater.allocate(capacity_);
                 int j = 0;
                 for(int i = 0; i <= size_ ; i++)
                 {
@@ -137,7 +137,7 @@ namespace ft
         void insert (iterator pos, size_type n, const value_type& value)
         {
             difference_type posi = pos - this->begin();
-            value_type *new_one = myallocator.allocate(((capacity_ + n) * 2));
+            value_type *new_one = ft_allocater.allocate(((capacity_ + n) * 2));
            if (posi <= this->size_ || posi >= this->size_)
            {
                 int i = 0;
@@ -162,9 +162,9 @@ namespace ft
            }
         }
     
-        template <class InputIterator>    void insert (iterator position, InputIterator first, InputIterator last)
+        template <class IT>
+        void insert (iterator position, IT first, IT last)
         {
-            
             difference_type calcule = last - first;
             if(calcule == 0){return;}
             if( this->size_ == 0 && calcule > 0){
@@ -176,7 +176,7 @@ namespace ft
             }
                 difference_type posi = position - begin();
                 int j = 0;
-                value_type *array_new = myallocator.allocate((this->capacity_ + calcule) * 2);
+                value_type *array_new = ft_allocater.allocate((this->capacity_ + calcule) * 2);
                 for(int i = 0; i < this->size_; i++){
                     array_new[i] = this->array[j++];
                     if(i == posi){
@@ -190,7 +190,7 @@ namespace ft
                         j--;
                     }
                 }
-                this->capacity_ *= 2;
+                this->capacity_ = ((this->capacity_ + calcule) * 2);
                 this->array = array_new;
             
         }
@@ -199,12 +199,49 @@ namespace ft
             int i = -1;
             if (capacity_ <= n)
             {
-                this->array = myallocator.allocate(n);
+                this->array = ft_allocater.allocate(n);
             }
             while (++i <= n)
                 this->array[i] = val;
             size_ = (i - 1);
             capacity_ = n;
+        }
+
+        template <class IT>  
+        void assign (IT first, IT last)
+        {
+            int i = 0;
+            difference_type lenght = last - first;
+
+            if(this->size_ + lenght >= this->capacity_)
+            {
+                this->array = ft_allocater.allocate((this->capacity_ + lenght) * 2);
+                this->capacity_ = (this->capacity_ + lenght) * 2;
+            }
+            while (first <= last){ this->array[i++] = *first; first++;}
+            this->size_ = lenght;
+        }
+
+        iterator erase (iterator position)
+        {
+            int i;
+            difference_type index = position - begin();
+            i = index;
+            if (index == this->size_){
+                ft_allocater.destroy(this->array + index);
+                this->size_--;
+            }
+            else if (position < end())
+            {
+                ft_allocater.destroy(this->array + index);
+                while (i <= size_)
+                {
+                    this->array[i] = this->array[i + 1];
+                    i++;
+                }
+                this->size_--;
+            }
+            return this->array + index;
         }
         /////////////////////////////////////////////// iterators //////////////////////////////////////////////////////////////
         iterator begin() { return (iterator(array));}
