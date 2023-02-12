@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/11 20:52:35 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/12 01:34:42 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,11 +212,10 @@ namespace ft
         {
             int i = 0;
             difference_type lenght = last - first;
-
-            if(this->size_ + lenght >= this->capacity_)
+            if(lenght >= this->capacity_)
             {
-                this->array = ft_allocater.allocate((this->capacity_ + lenght) * 2);
-                this->capacity_ = (this->capacity_ + lenght) * 2;
+                this->array = ft_allocater.allocate(this->capacity_  * 2);
+                this->capacity_ = this->capacity_  * 2;
             }
             while (first <= last){ this->array[i++] = *first; first++;}
             this->size_ = lenght;
@@ -243,7 +242,37 @@ namespace ft
             }
             return this->array + index;
         }
-        /////////////////////////////////////////////// iterators //////////////////////////////////////////////////////////////
+
+        iterator erase (iterator first, iterator last)
+        {
+            difference_type index = first - begin();
+            difference_type index_end = last - begin();
+            if(index_end <= index)
+                return this->array + index;
+            difference_type range = last - first;
+            int i = index;
+            while (index < index_end)
+            {
+               ft_allocater.destroy(this->array + index);
+               index++;
+            }
+            if(last < end()){
+                while (index_end <= this->size_)
+                {
+                    this->array[i] = this->array[index_end++];
+                    i++;
+                }
+            }
+            else{
+            while (i <= size_)
+            {
+                this->array[i] = this->array[i + 1];
+                i++;
+            }
+            }
+            this->size_ -= range;
+        }
+        ////////////////////////////////////////////// iterators //////////////////////////////////////////////////////////////
         iterator begin() { return (iterator(array));}
         const_iterator begin() const { return (iterator(array));}
         const_iterator end() const { return (iterator(this->array + size_));}

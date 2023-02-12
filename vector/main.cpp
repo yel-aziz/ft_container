@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:12:47 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/11 20:48:12 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/12 01:33:48 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,32 @@
 
 int main()
 {
-  ft::vector<int> a;
-  ft::vector<int>::iterator it;
-  ft::vector<int> b;
+  std::vector<char> a;
+  std::vector<char>::iterator it;
+  std::vector<char>::iterator it_end;
+  std::vector<char> b;
 
-  a.push_back(-4944565);
-  a.push_back(4);
+  // a.push_back(-4944565);
+  // a.push_back(4);
   
-  b.push_back(11);
-  b.push_back(19);
-  b.push_back(18);
-  b.push_back(133);
-  std::cout << "capacity b ===== " << b.capacity() << std::endl;
-  std::cout << "size b ==== " << b.size() << std::endl;
-  it = b.end();
+  b.push_back('a');
+  b.push_back('f');
+  b.push_back('e');
+  b.push_back('d');
+  b.push_back('c');
+  b.push_back('b');
 
-  b.erase(it);
+  // std::cout << "capacity b ===== " << b.capacity() << std::endl;
+  // std::cout << "size b ==== " << b.size() << std::endl;
+  it = b.begin();
+  it_end = b.end();
+
+  // it++;
+  // it_end--;
+  // it_end--;
+  it_end--;
+
+  b.erase(it,it_end);
 
     
   // b.assign(a.begin(),a.end());
