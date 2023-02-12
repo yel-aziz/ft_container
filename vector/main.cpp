@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:12:47 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/12 01:33:48 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:40:48 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 int main()
 {
-  std::vector<char> a;
-  std::vector<char>::iterator it;
-  std::vector<char>::iterator it_end;
-  std::vector<char> b;
+  ft::vector<char> a;
+  ft::vector<char>::iterator it;
+  ft::vector<char>::iterator it_end;
+  ft::vector<char> b;
 
   // a.push_back(-4944565);
   // a.push_back(4);
@@ -39,12 +39,12 @@ int main()
   it = b.begin();
   it_end = b.end();
 
-  // it++;
+  it++;
   // it_end--;
   // it_end--;
-  it_end--;
-
-  b.erase(it,it_end);
+  // it_end--;
+  b.resize(90);
+  // b.erase(it,it_end);
 
     
   // b.assign(a.begin(),a.end());

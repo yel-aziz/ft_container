@@ -6,7 +6,7 @@
 /*   By: yel-aziz <yel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:58:22 by yel-aziz          #+#    #+#             */
-/*   Updated: 2023/02/12 01:34:42 by yel-aziz         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:40:00 by yel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,10 +290,34 @@ namespace ft
         {
             return this->capacity_;
         }
-        size_type max_size() const { return this->capacity_; }
-        // void resize (size_type n, value_type val = value_type()){
-
-        // }
+        size_type max_size() const { return this->capacity_;}
+        
+        void resize (size_type n, value_type val = value_type()){
+            // difference_type moyen = (this->size_ + n);
+            if (n > this->capacity_ && this->size_ > 0){
+                value_type *new_array = ft_allocater.allocate((this->capacity_ + n) * 2);
+                for(int i = 0; i <= this->size_;i++)
+                    new_array[i] = this->array[i];
+                this->capacity_= (this->capacity_ + n) * 2;
+                this->array = new_array;
+                this->size_ = n;
+            }
+            else{
+                value_type *new_array = ft_allocater.allocate(n);
+                for (int i = 0; i < n; i++)
+                {
+                    new_array[i] = this->array[i];
+                }
+                for (int j = n; j < this->size_; j++)
+                {
+                    ft_allocater.destroy(this->array + j);
+                }
+                
+                this->capacity_ = n;
+                this->size_ = n;
+                this->array = new_array;
+            }
+        }
 
         value_type operator[](size_type n){ return this->array[n];}
     };
